@@ -34,7 +34,7 @@ class FormElement {
         if (this.element_type=='button') {
             $(this.obj_id).addClass( "kdzform-buttons");
         } else if (this.element_type!='html') {
-            $(this.obj_id).addClass( "kdzform-buttons");
+            $(this.obj_id).addClass( "kdzform-fields");
         }
 
         this.validStatus();
@@ -44,12 +44,12 @@ class FormElement {
         if (this.content!='') {
             //should be inactive
             $(this.obj_id).prop(this.noactctive,false);
-            if (this.active_class!='') {
+            if ((this.active_class)&&(this.inactive_class)) {
                 $(this.obj_id).toggleClass(this.active_class+' '+this.inactive_class);
             }
         } else if (this.noactctive!='') {
             //active
-            if (this.active_class!='') {
+            if ((this.active_class)&&(this.inactive_class)) {
                 $(this.obj_id).toggleClass(this.inactive_class+' '+this.active_class);
             }
             $(this.obj_id).prop(this.noactctive,true);
@@ -129,7 +129,7 @@ class FormElement {
                
                 if (fl==fl_cnt) {
                     //add inputes to request and send
-                
+                    this.content='true';
                     for(var key in tmp_request) {
                         request[key]=tmp_request[key];
                     }
@@ -142,6 +142,7 @@ class FormElement {
                 //check if all mandatory inputes provided
                 var fl=0;
                 var fl_cnt=0;
+
                 for(var key in this.inputes) {
                     var inp=this.inputes[key];
                     fl_cnt++;
