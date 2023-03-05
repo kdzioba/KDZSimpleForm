@@ -17,5 +17,33 @@ Init KDZSimple object:
 ```
 var form=new KDZSimpleForm();
 ```
+###### 3. Add the element configuration
+Each element that we excpect dependency need to be added. To pleas use command
+
+```
+form.addElement({[paramters]});
+```
+where [paramters] is a dictionary with values:
+
+
+| element_type | type of element. Possible values: select, input, button, html. "html" can be ised for all elements where content has be added dynamic and are not form elements |
+|-------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|view           |used only for AJAX request. Need has url that will be executed|
+|-------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+obj - element id. Have to be with prefix '#' (example #txtFirstName where element id is txtFirstName)
+type - 
+                                'view':'',
+                                'obj':'#btnDelete',
+                                'type':'inputrelated',
+                                'triggered':'',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+
+###### 4. Execute
+Execute by command run
+```
+form.run();
+```
 
 
