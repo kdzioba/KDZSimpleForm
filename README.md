@@ -30,11 +30,7 @@ where [paramters] is a dictionary with values:
 | element_type | type of element. Possible values: select, input, button, html. "html" can be ised for all elements where content has be added dynamic and are not form elements | element_type':'button'|
 |view           |used only for AJAX request. Need has url that will be executed| view':'https://myapi.com/rest/getvalues',|
 |obj|element id. Have to be with prefix '#' (example #txtFirstName where element id is txtFirstName)| |
-|type |Type of element. Possible values: 
-- nodepended - element no depended. Can be used as input for other elements
-- depended_but_all - element depended on other elements but processing doesn't need any inputs from other element
-- depended_full - element depended on other elements
-- inputrelated - elements depend on other parameters. Can be used for buttons or other HTML elements (not form) to load or process specyfic content
+|type |Type of element. Possible values: nodepended - element no depended. Can be used as input for other elements,  depended_but_all - element depended on other elements but processing doesn't need any inputs from other element,  depended_full - element depended on other elements, inputrelated - elements depend on other parameters. Can be used for buttons or other HTML elements (not form) to load or process specyfic content
 | | 
 |triggered|Uses when we need to populate values on action on specyfica element. Example usage is load content only when button clicked.  | |        
 |depended_pattern|List of elemenent that value will be provided when the change on particular element happen. Used in REST request to limit data or in other cases whene we need to provide the pattern to other filed| | 
