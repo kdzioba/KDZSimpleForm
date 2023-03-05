@@ -72,7 +72,7 @@ class FormElement {
         );
     }
 
-    update(pattern,keys) {
+    update(pattern,keys,author='') {
         //update attributes
         var send_depended=0;
         var request={};
@@ -94,6 +94,13 @@ class FormElement {
                 }
             }
             send_depended=1;
+        }
+
+        //check triggered paramters
+        if (this.triggered!='') {
+            if (author!=this.triggered) {
+                send_depended=0;
+            }
         }
 
         if (this.view!='') {
@@ -119,8 +126,10 @@ class FormElement {
                     }
                     
                 }
+               
                 if (fl==fl_cnt) {
                     //add inputes to request and send
+                
                     for(var key in tmp_request) {
                         request[key]=tmp_request[key];
                     }
@@ -159,6 +168,8 @@ class FormElement {
                 }
             }
         }
+
+        //clear button values
     }
 
 };
@@ -290,12 +301,13 @@ class KDZSimpleForm {
         $('.kdzform-buttons').click(function() {
             var obj_id='#'+this.id;
             var value=$(obj_id).val();
+
             //check if object should be updated
             if (obj_id in frm.dependency_k) {
                 var elments=frm.dependency_k[obj_id];
                 for(var i=0;i<elments.length;i++) {
                     var itm=elments[i];
-                    frm.objects[itm].update('',[{'name':obj_id,'value':value}]);
+                    frm.objects[itm].update('',[{'name':obj_id,'value':value}],obj_id);
                     if (this.inputes === undefined) {
                         //do nothing
                     } else {
@@ -308,7 +320,7 @@ class KDZSimpleForm {
                 var elments=frm.dependency_p[obj_id];
                 for(var i=0;i<elments.length;i++) {
                     var itm=elments[i];
-                    frm.objects[itm].update(value,[]);
+                    frm.objects[itm].update(value,[],obj_id);
                     if (this.inputes === undefined) {
                         //do nothing
                     } else {

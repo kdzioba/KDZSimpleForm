@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simple Calcualtor</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="js/kdzsimpleform.js"></script>
+    <script src="../../src/kdzsimpleform.js"></script>
     <style>
         table {
             border-spacing: 0;
@@ -95,8 +95,7 @@
                     //number
                     num_ent=num_ent+o;
                 };
-                console.log(num_cal);
-                console.log(num_ent);
+                
                 if (pre_action!=action) {
                     var n=+num_cal;
                     if (pre_action=='+') {
@@ -178,6 +177,7 @@
                                 'view':'',
                                 'obj':'#btnDivide',
                                 'type':'inputrelated',
+                                'triggered':'',
                                 'depended_pattern':[],
                                 'depended_key':[],
                                 'inputes':{},
@@ -190,6 +190,7 @@
                                 'view':'',
                                 'obj':'#btnDot',
                                 'type':'inputrelated',
+                                'triggered':'',
                                 'depended_pattern':[],
                                 'depended_key':[],
                                 'inputes':{},
@@ -203,6 +204,7 @@
                                 'view':'',
                                 'obj':'#btnDelete',
                                 'type':'inputrelated',
+                                'triggered':'',
                                 'depended_pattern':[],
                                 'depended_key':[],
                                 'inputes':{},
@@ -215,6 +217,7 @@
                                 'view':'',
                                 'obj':'#btnResult',
                                 'type':'inputrelated',
+                                'triggered':'',
                                 'depended_pattern':[],
                                 'depended_key':[],
                                 'inputes':{},
@@ -228,12 +231,12 @@
                                 'view':'',
                                 'obj':'#txtResult',
                                 'type':'inputrelated',
+                                'triggered':'',
                                 'depended_pattern':[],
                                 'depended_key':['#btn0','#btn1','#btn2','#btn3','#btn4','#btn5','#btn6','#btn7','#btn8','#btn9','#btnPlus','#btnResult','#btnMinus','#btnMultiply','#btnDivide','#btnDelete','#btnDot'],
                                 'preprocess_js':function(inp) {
                                     for(var key in inp) {
                                         var val=inp[key];
-                                        console.log(val);
                                         $('#txtResult').html(calculate(val));
                                     }
                                 },
