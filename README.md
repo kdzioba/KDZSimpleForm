@@ -26,7 +26,7 @@ form.addElement({[paramters]});
 where [paramters] is a dictionary with values:
 
 |Key name|Description|Example|
-|-----:|-----------|
+|-----:|-----------|-----------|
 | element_type | type of element. Possible values: select, input, button, html. "html" can be ised for all elements where content has be added dynamic and are not form elements | ```
 'element_type':'button',
 ```
