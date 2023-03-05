@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Calcualtor</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="js/kdzsimpleform.js"></script>
+    <style>
+        table {
+            border-spacing: 0;
+        }
+        td {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Calculator</h1>
+    <h4>example with KDZSimpleForm.js</h4>
+
+    <!-- calculator elements -->
+    <table>
+        <tr>
+            <td colspan="4" style="border: 1px solid black;height:30px;"><span id="txtResult"></span></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input style="height:30px;width:90px" type="button" id="btnDelete" value="C"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btnDivide" value="/"/></td>
+        </tr>
+        <tr>
+            <td><input style="height:30px;width:30px" type="button" id="btn7" value="7"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btn8" value="8"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btn9" value="9"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btnMultiply" value="*"/></td>
+        </tr>
+        <tr>
+            <td><input style="height:30px;width:30px" type="button" id="btn4" value="4"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btn5" value="5"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btn6" value="6"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btnMinus" value="-"/></td>
+        </tr>
+        <tr>
+            <td><input style="height:30px;width:30px" type="button" id="btn1" value="1"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btn2" value="2"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btn3" value="3"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btnPlus" value="+"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input style="height:30px;width:60px" type="button" id="btn0" value="0"/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btnDot" value="."/></td>
+            <td><input style="height:30px;width:30px" type="button" id="btnResult" value="="/></td>
+        </tr>
+    </table>
+    
+      <!-- javascript part -->
+      <script>
+           var result=0;
+           var num_ent='';
+           var num_cal='';
+           var pre_action='';
+           var action='';
+
+           function calculate(o) {
+                
+                if (o=='+') {
+                    action='+';
+                    num_cal=num_ent;
+                    num_ent='';
+                } else if (o=='-') {
+                    action='-';
+                    num_cal=num_ent;
+                    num_ent='';
+                } else if (o=='*') {   
+                    action='*';
+                    num_cal=num_ent;
+                    num_ent='';
+                } else if (o=='/') {  
+                    action='/';
+                    num_cal=num_ent;
+                    num_ent='';
+                } else if (o=='=') {  
+                    action='=';
+                    num_cal=num_ent;
+                    num_ent='';
+                } else if (o=='C') {  
+                    result=0;
+                    num_ent=0;
+                    pre_action=''
+                    action='';
+                    num_ent='';
+                    num_cal='';
+                } else {
+                    //number
+                    num_ent=num_ent+o;
+                };
+                console.log(num_cal);
+                console.log(num_ent);
+                if (pre_action!=action) {
+                    var n=+num_cal;
+                    if (pre_action=='+') {
+                        result=result+n;
+                    } else if (pre_action=='-') {
+                        result=result-n;
+                    } else if (pre_action=='*') {
+                        result=result*n;
+                    } else if (pre_action=='/') {
+                        result=result / n;
+                    }
+                    pre_action=action;
+                    return result;
+               } else if ((pre_action=='')&&(pre_action==action)) {
+                    result=+num_ent;
+                    return num_ent;
+                } else {
+                    return num_ent;
+                }
+           };             
+           
+
+            $(document).ready(function() { 
+                   var form=new KDZSimpleForm();
+
+                   //buttons wiht numbers
+                   // add 10 buttons since 0 till 9
+                   for(var i=0;i<10;i++) {
+                        var elementName='#btn'+i;
+                        form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':elementName,
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                        );
+                   };
+
+                   //add operation buttons 
+                   //plus
+                   form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnPlus',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                    );
+                    //minus
+                    form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnMinus',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                    );
+                    //multiply
+                    form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnMultiply',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                    );
+                    //divide
+                    form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnDivide',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                    );
+
+                    //dot
+                    form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnDot',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                    );
+
+                    //actions
+                    //remove
+                    form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnDelete',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                    );
+
+                    //calculate
+                    form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnResult',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+                    );
+
+
+                    //results
+                    form.addElement({
+                                'element_type':'html',
+                                'view':'',
+                                'obj':'#txtResult',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':['#btn0','#btn1','#btn2','#btn3','#btn4','#btn5','#btn6','#btn7','#btn8','#btn9','#btnPlus','#btnResult','#btnMinus','#btnMultiply','#btnDivide','#btnDelete','#btnDot'],
+                                'preprocess_js':function(inp) {
+                                    for(var key in inp) {
+                                        var val=inp[key];
+                                        console.log(val);
+                                        $('#txtResult').html(calculate(val));
+                                    }
+                                },
+                            }
+                    );
+
+
+                   form.run();
+                        
+            });
+            
+     </script>
+  </body>
+</html>
