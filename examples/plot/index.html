@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plot</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="../../src/kdzsimpleform.js"></script>
+    <style>
+        table {
+            border-spacing: 0;
+        }
+        td {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Plot</h1>
+    <h4>example with KDZSimpleForm.js</h4>
+    <div>y=ax+b</div>
+    <div>a:<input type="text" id="inA" value=""></div>
+    <div>b:<input type="text" id="inB" value=""></div>
+    <div>c:<input type="text" id="inC" value=""></div>
+    <div><input type="button" id="btnDraw" value="Draw"></div>
+    <div id="plot" style="display: block; border: 1px, solid, black;">
+        <svg id="plot_canva" height="420" width="420" style="background-color: #eeeeee;"></svg>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            
+            function fy(a,b,c,x) {
+                return (a*x*x+b*x+c);
+            };
+            
+            function drawPlot(a,b,c) {
+                $("#plot_canva").empty();
+                var a_=+a;
+                var b_=+b;
+                var c_=+c;
+                
+                var y=[];
+                max_v=0;
+                min_v=0;
+                for(x=-100;x<100;x++) {
+                   var r=fy(a_,b_,c_,x);
+                    if (max_v<r) {
+                        max_v=r;
+                    }
+                    if (min_v>r) {
+                        min_v=r;
+                    }
+                }
+
+                var x_w=420/200;
+                var y_w=0;
+                if (max_v==min_v) {
+                    y_w=400/(Math.abs(max_v));
+                } else {
+                    y_w=400/(Math.abs(max_v)+Math.abs(min_v));
+                }
+
+                var m_y=((Math.abs(max_v)+Math.abs(min_v))/2)*y_w;
+
+                //draw
+                idx=1;
+                for(var x=-99;x<=100;x++) {
+                    n_y=fy(a_,b_,c_,x);
+                    var newLine = document.createElementNS('http://www.w3.org/2000/svg','circle');
+                    newLine.setAttribute('id','line'+idx);
+                    newLine.setAttribute('cx',200+x*x_w);
+                    newLine.setAttribute('cy',-1*((n_y-max_v)*y_w)+10);
+                    newLine.setAttribute('r',2);
+                    newLine.setAttribute('stroke','black');
+                    newLine.setAttribute('fill','black');
+                    $("#plot_canva").append(newLine);
+
+                    idx++;
+                }
+
+            }
+
+
+
+            var form=new KDZSimpleForm();
+
+            form.addElement({
+                                'element_type':'input',
+                                'view':'',
+                                'obj':'#inA',
+                                'type':'nodepended',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+            );
+
+            form.addElement({
+                                'element_type':'input',
+                                'view':'',
+                                'obj':'#inB',
+                                'type':'nodepended',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+            );
+
+            form.addElement({
+                                'element_type':'input',
+                                'view':'',
+                                'obj':'#inC',
+                                'type':'nodepended',
+                                'depended_pattern':[],
+                                'depended_key':[],
+                                'inputes':{},
+                            }
+            );
+
+            form.addElement({
+                                'element_type':'button',
+                                'view':'',
+                                'obj':'#btnDraw',
+                                'type':'inputrelated',
+                                'triggered':'',
+                                'depended_pattern':[],
+                                'depended_key':['#inA','#inB','#inC'],
+                                'inputes':{
+                                    '#inA':{
+                                        'ismandatory':'Y',
+                                        'value':''
+                                    },
+                                    '#inB':{
+                                        'ismandatory':'Y',
+                                        'value':''
+                                    },
+                                    '#inC':{
+                                        'ismandatory':'Y',
+                                        'value':''
+                                    }
+                                },
+                                'noactctive':'disabled',
+                            }
+            );
+
+            form.addElement({
+                                'element_type':'html',
+                                'view':'',
+                                'obj':'#plot',
+                                'type':'inputrelated',
+                                'depended_pattern':[],
+                                'depended_key':['#inA','#inB','#inC','#btnDraw'],
+                                'triggered':'#btnDraw',
+                                'inputes':{
+                                    '#inA':{
+                                        'ismandatory':'Y',
+                                        'value':''
+                                    },
+                                    '#inB':{
+                                        'ismandatory':'Y',
+                                        'value':''
+                                    },
+                                    '#inC':{
+                                        'ismandatory':'Y',
+                                        'value':''
+                                    },
+                                    '#btnDraw':{
+                                        'ismandatory':'Y',
+                                        'value':''
+                                    }
+                                },
+                                'noactctive':'',
+                                'preprocess_js':function() {
+                                    var inp=this.inputes;
+                                    drawPlot(inp['#inA'].value,inp['#inB'].value,inp['#inC'].value);
+                                },
+                            }
+            );
+
+            form.run();
+        });
+    </script>
+    </body>
+</html>
