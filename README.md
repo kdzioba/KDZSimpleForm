@@ -25,11 +25,16 @@ form.addElement({[paramters]});
 ```
 where [paramters] is a dictionary with values:
 
-
-| element_type | type of element. Possible values: select, input, button, html. "html" can be ised for all elements where content has be added dynamic and are not form elements |
-|-------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|view           |used only for AJAX request. Need has url that will be executed|
-|-------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|Key name|Description|Example|
+|-----:|-----------|
+| element_type | type of element. Possible values: select, input, button, html. "html" can be ised for all elements where content has be added dynamic and are not form elements | ```
+'element_type':'button',
+```
+|-----:|-----------|-----------|
+|view           |used only for AJAX request. Need has url that will be executed| ```
+'view':'https://myapi.com/rest/getvalues',
+```|
+|-----:|-----------|
 obj - element id. Have to be with prefix '#' (example #txtFirstName where element id is txtFirstName)
 type - 
                                 'view':'',
